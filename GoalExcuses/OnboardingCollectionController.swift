@@ -61,21 +61,40 @@ class OnboardingCollectionController : UICollectionViewController, UICollectionV
     
     @objc private func handlePrev() {
         let nextIndex = max(pageControl.currentPage - 1, 0)
+        
+        
+        
         let indexPath = IndexPath(item: nextIndex, section: 0)
         pageControl.currentPage = nextIndex
         collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     @objc private func handleNext() {
-        let nextIndex = min(pageControl.currentPage + 1, pageData.totalData.count - 1)
-        let indexPath = IndexPath(item: nextIndex, section: 0)
-        pageControl.currentPage = nextIndex
-        collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        
+        if pageControl.currentPage == 3 {
+            self.performSegue(withIdentifier: "completedOnboarding", sender: nil)
+        } else {
+            let nextIndex = min(pageControl.currentPage + 1, pageData.totalData.count - 1)
+            let indexPath = IndexPath(item: nextIndex, section: 0)
+            pageControl.currentPage = nextIndex
+            collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            if nextIndex == 3 {
+                nextButton.setAttributedTitle(NSMutableAttributedString(string: "LOGIN", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)]), for: .normal)
+            } else {
+                nextButton.setAttributedTitle(NSMutableAttributedString(string: "NEXT", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)]), for: .normal)
+            }
+            
+        }
     }
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let x = targetContentOffset.pointee.x
         pageControl.currentPage = Int(x / view.frame.width)
+        if pageControl.currentPage == 3 {
+            nextButton.setAttributedTitle(NSMutableAttributedString(string: "LOGIN", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)]), for: .normal)
+        } else {
+            nextButton.setAttributedTitle(NSMutableAttributedString(string: "NEXT", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)]), for: .normal)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

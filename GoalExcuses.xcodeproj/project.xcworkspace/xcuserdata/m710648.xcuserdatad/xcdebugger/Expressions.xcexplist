@@ -10,5 +10,13 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "OnboardingCollectionController.handleNext():OnboardingCollectionController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "pageControl.currentPage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

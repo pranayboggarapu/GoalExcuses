@@ -14,6 +14,7 @@
 		24BC92DB239C4F6D00422319 /* OnboardingCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92DA239C4F6D00422319 /* OnboardingCollectionController.swift */; };
 		24BC92DD239C54F900422319 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92DC239C54F900422319 /* OnboardingCollectionViewCell.swift */; };
 		24BC92DF239C5B2E00422319 /* OnboardingPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92DE239C5B2E00422319 /* OnboardingPageData.swift */; };
+		24BC92E1239C84E500422319 /* FacebookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92E0239C84E500422319 /* FacebookLoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		24BC92DA239C4F6D00422319 /* OnboardingCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionController.swift; sourceTree = "<group>"; };
 		24BC92DC239C54F900422319 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		24BC92DE239C5B2E00422319 /* OnboardingPageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageData.swift; sourceTree = "<group>"; };
+		24BC92E0239C84E500422319 /* FacebookLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				24BC92DA239C4F6D00422319 /* OnboardingCollectionController.swift */,
 				24BC92DC239C54F900422319 /* OnboardingCollectionViewCell.swift */,
 				24BC92DE239C5B2E00422319 /* OnboardingPageData.swift */,
+				24BC92E0239C84E500422319 /* FacebookLoginViewController.swift */,
 			);
 			path = GoalExcuses;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			files = (
 				24BC92DB239C4F6D00422319 /* OnboardingCollectionController.swift in Sources */,
 				24BC92C9239C1D4000422319 /* AppDelegate.swift in Sources */,
+				24BC92E1239C84E500422319 /* FacebookLoginViewController.swift in Sources */,
 				24BC92DD239C54F900422319 /* OnboardingCollectionViewCell.swift in Sources */,
 				24BC92DF239C5B2E00422319 /* OnboardingPageData.swift in Sources */,
 			);

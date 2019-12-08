@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -38,10 +39,28 @@
                             <outlet property="delegate" destination="FgQ-sg-jRp" id="fRG-lg-rji"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <segue destination="D5e-lJ-TmM" kind="presentation" identifier="completedOnboarding" id="nTK-fX-Q6O"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PLR-Le-Qem" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-602" y="19"/>
+        </scene>
+        <!--Facebook Login View Controller-->
+        <scene sceneID="xxD-8f-yMe">
+            <objects>
+                <viewController id="D5e-lJ-TmM" customClass="FacebookLoginViewController" customModule="GoalExcuses" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9Ck-nn-3Kw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="1ia-K7-arU"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RFA-Jl-DVR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="431" y="17"/>
         </scene>
     </scenes>
 </document>
