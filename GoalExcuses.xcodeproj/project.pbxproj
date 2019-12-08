@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		24BC92C9239C1D4000422319 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92C8239C1D4000422319 /* AppDelegate.swift */; };
-		24BC92CB239C1D4000422319 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92CA239C1D4000422319 /* OnboardingViewController.swift */; };
 		24BC92CE239C1D4000422319 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24BC92CC239C1D4000422319 /* Main.storyboard */; };
 		24BC92D0239C1D4100422319 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24BC92CF239C1D4100422319 /* Assets.xcassets */; };
 		24BC92D3239C1D4100422319 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24BC92D1239C1D4100422319 /* LaunchScreen.storyboard */; };
@@ -20,7 +19,6 @@
 /* Begin PBXFileReference section */
 		24BC92C5239C1D4000422319 /* GoalExcuses.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoalExcuses.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24BC92C8239C1D4000422319 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		24BC92CA239C1D4000422319 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		24BC92CD239C1D4000422319 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		24BC92CF239C1D4100422319 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24BC92D2239C1D4100422319 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -61,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				24BC92C8239C1D4000422319 /* AppDelegate.swift */,
-				24BC92CA239C1D4000422319 /* OnboardingViewController.swift */,
 				24BC92CC239C1D4000422319 /* Main.storyboard */,
 				24BC92CF239C1D4100422319 /* Assets.xcassets */,
 				24BC92D1239C1D4100422319 /* LaunchScreen.storyboard */,
@@ -144,7 +141,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24BC92CB239C1D4000422319 /* OnboardingViewController.swift in Sources */,
 				24BC92DB239C4F6D00422319 /* OnboardingCollectionController.swift in Sources */,
 				24BC92C9239C1D4000422319 /* AppDelegate.swift in Sources */,
 				24BC92DD239C54F900422319 /* OnboardingCollectionViewCell.swift in Sources */,
