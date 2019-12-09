@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,9 +15,11 @@
 		24BC92DD239C54F900422319 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92DC239C54F900422319 /* OnboardingCollectionViewCell.swift */; };
 		24BC92DF239C5B2E00422319 /* OnboardingPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92DE239C5B2E00422319 /* OnboardingPageData.swift */; };
 		24BC92E1239C84E500422319 /* FacebookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92E0239C84E500422319 /* FacebookLoginViewController.swift */; };
+		FA915B1B6973EA136EFB5447 /* Pods_GoalExcuses.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CCA80C69860181AF9FB9C7 /* Pods_GoalExcuses.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11EF9970E65122B7F0F0C031 /* Pods-GoalExcuses.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoalExcuses.release.xcconfig"; path = "Target Support Files/Pods-GoalExcuses/Pods-GoalExcuses.release.xcconfig"; sourceTree = "<group>"; };
 		24BC92C5239C1D4000422319 /* GoalExcuses.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoalExcuses.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24BC92C8239C1D4000422319 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24BC92CD239C1D4000422319 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -28,6 +30,9 @@
 		24BC92DC239C54F900422319 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		24BC92DE239C5B2E00422319 /* OnboardingPageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageData.swift; sourceTree = "<group>"; };
 		24BC92E0239C84E500422319 /* FacebookLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginViewController.swift; sourceTree = "<group>"; };
+		24BC92E5239C937800422319 /* GoalExcuses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoalExcuses.entitlements; sourceTree = "<group>"; };
+		566C5C8446BCD886FE49A407 /* Pods-GoalExcuses.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoalExcuses.debug.xcconfig"; path = "Target Support Files/Pods-GoalExcuses/Pods-GoalExcuses.debug.xcconfig"; sourceTree = "<group>"; };
+		A3CCA80C69860181AF9FB9C7 /* Pods_GoalExcuses.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoalExcuses.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA915B1B6973EA136EFB5447 /* Pods_GoalExcuses.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +52,8 @@
 			children = (
 				24BC92C7239C1D4000422319 /* GoalExcuses */,
 				24BC92C6239C1D4000422319 /* Products */,
+				52A681DBA49B2AF200EA468C /* Pods */,
+				7F4243DDD96342D78DCFEDC2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +68,7 @@
 		24BC92C7239C1D4000422319 /* GoalExcuses */ = {
 			isa = PBXGroup;
 			children = (
+				24BC92E5239C937800422319 /* GoalExcuses.entitlements */,
 				24BC92C8239C1D4000422319 /* AppDelegate.swift */,
 				24BC92CC239C1D4000422319 /* Main.storyboard */,
 				24BC92CF239C1D4100422319 /* Assets.xcassets */,
@@ -73,6 +82,23 @@
 			path = GoalExcuses;
 			sourceTree = "<group>";
 		};
+		52A681DBA49B2AF200EA468C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				566C5C8446BCD886FE49A407 /* Pods-GoalExcuses.debug.xcconfig */,
+				11EF9970E65122B7F0F0C031 /* Pods-GoalExcuses.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		7F4243DDD96342D78DCFEDC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A3CCA80C69860181AF9FB9C7 /* Pods_GoalExcuses.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -80,9 +106,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24BC92D7239C1D4100422319 /* Build configuration list for PBXNativeTarget "GoalExcuses" */;
 			buildPhases = (
+				DF2455FE88DE6983367F44C0 /* [CP] Check Pods Manifest.lock */,
 				24BC92C1239C1D4000422319 /* Sources */,
 				24BC92C2239C1D4000422319 /* Frameworks */,
 				24BC92C3239C1D4000422319 /* Resources */,
+				878E5C517DAF0066D0DF2537 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -105,6 +133,11 @@
 				TargetAttributes = {
 					24BC92C4239C1D4000422319 = {
 						CreatedOnToolsVersion = 10.3;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -138,6 +171,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		878E5C517DAF0066D0DF2537 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GoalExcuses/Pods-GoalExcuses-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GoalExcuses/Pods-GoalExcuses-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GoalExcuses/Pods-GoalExcuses-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF2455FE88DE6983367F44C0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GoalExcuses-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		24BC92C1239C1D4000422319 /* Sources */ = {
@@ -292,8 +367,10 @@
 		};
 		24BC92D8239C1D4100422319 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 566C5C8446BCD886FE49A407 /* Pods-GoalExcuses.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GoalExcuses/GoalExcuses.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R34QXQ839Z;
 				INFOPLIST_FILE = GoalExcuses/Info.plist;
@@ -310,8 +387,10 @@
 		};
 		24BC92D9239C1D4100422319 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 11EF9970E65122B7F0F0C031 /* Pods-GoalExcuses.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GoalExcuses/GoalExcuses.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R34QXQ839Z;
 				INFOPLIST_FILE = GoalExcuses/Info.plist;
