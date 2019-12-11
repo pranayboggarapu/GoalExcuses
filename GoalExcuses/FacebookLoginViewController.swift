@@ -26,7 +26,7 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
     
     var goalExcuseTextAndDescription: UITextView = {
         var textView = UITextView()
-        let subtitleText = NSAttributedString(string: "\n\n\nJust login with any of the platforms below and you're on your way to achieve your goal", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
+        let subtitleText = NSAttributedString(string: "\n\n\nJust login with any of the platforms below and choose a user name.You're on your way to achieve your goal by cutting down your excuses with the help of friends.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
         let headerText = NSAttributedString(string: "You're almost done!!", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
         let mutableAttributedString = NSMutableAttributedString(attributedString: headerText)
         mutableAttributedString.append(subtitleText)
@@ -41,11 +41,6 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton.delegate = self
-        view.addSubview(loginButton)
-        NSLayoutConstraint.activate([loginButton.heightAnchor.constraint(equalToConstant: 60)])
-//        NSLayoutConstraint.activate([loginButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor,constant: 32),
-//                                    loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
-//                                    loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)])
         setupUIOnTheScreen()
     }
     
@@ -57,13 +52,22 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
         var descriptionView = UIView()
         descriptionView.addSubview(goalExcuseTextAndDescription)
         
+        var choosingUserName = UIView()
         
-        var stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,loginButton])
+        var loginButtonsView = UIStackView()
+        loginButtonsView.addSubview(loginButton)
+        NSLayoutConstraint.activate([loginButton.topAnchor.constraint(equalTo: loginButtonsView.topAnchor, constant: 60),
+                                     loginButton.heightAnchor.constraint(equalToConstant: 60),
+                                     loginButton.leadingAnchor.constraint(equalTo: loginButtonsView.leadingAnchor, constant: 40),
+                                     loginButton.trailingAnchor.constraint(equalTo: loginButtonsView.trailingAnchor, constant: -40)])
+        
+        
+        var stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,choosingUserName,loginButtonsView])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        var loginButtonsView = UIStackView()
+        
         
         view.addSubview(stackView)
         NSLayoutConstraint.activate([stackView.leftAnchor.constraint(equalTo: view.leftAnchor), stackView.rightAnchor.constraint(equalTo: view.rightAnchor), stackView.topAnchor.constraint(equalTo: view.topAnchor), stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])

@@ -55,8 +55,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         
         var descriptionView = UIView()
         descriptionView.addSubview(goalExcuseTextAndDescription)
-        
-        
+                
         var stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,UIView()])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
