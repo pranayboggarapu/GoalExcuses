@@ -26,7 +26,7 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
     
     var goalExcuseTextAndDescription: UITextView = {
         var textView = UITextView()
-        let subtitleText = NSAttributedString(string: "\n\n\nJust login with any of the platforms below and choose a user name.You're on your way to achieve your goal by cutting down your excuses with the help of friends.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
+        let subtitleText = NSAttributedString(string: "\n\n\nYou're almost there....You're on your way to achieve your goal by cutting down your excuses with the help of friends.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
         let headerText = NSAttributedString(string: "You're almost done!!", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
         let mutableAttributedString = NSMutableAttributedString(attributedString: headerText)
         mutableAttributedString.append(subtitleText)
@@ -38,10 +38,42 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
         return textView
     }()
     
+    
+    var labelDescriptionUserName: UITextView = {
+        var userNameLabel = UITextView()
+        userNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        userNameLabel.attributedText = NSAttributedString(string: "\n\n\nThis will be your user name going forward.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray])
+        userNameLabel.textAlignment = .left
+        userNameLabel.isEditable = false
+        userNameLabel.isScrollEnabled = false
+        return userNameLabel
+    }()
+    
+    var stepsInDetail: UITextView = {
+        var textView = UITextView()
+        let subtitleText = NSAttributedString(string: "\n\n\n 1. Login in Facebook below.\n\n2. Remember your username.", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 13)])
+        textView.attributedText = subtitleText
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textAlignment = .left
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        return textView
+    }()
+    
+    var randomUserNameText: UITextField = {
+        var userName = UITextField()
+        userName.translatesAutoresizingMaskIntoConstraints = false
+        userName.textAlignment = .center
+        userName.isUserInteractionEnabled = false
+        userName.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 32)])
+        return userName
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton.delegate = self
         setupUIOnTheScreen()
+        randomUserNameText.text = randomString(length: 8)
     }
     
     private func setupUIOnTheScreen() {
@@ -53,6 +85,7 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
         descriptionView.addSubview(goalExcuseTextAndDescription)
         
         var choosingUserName = UIView()
+        choosingUserName.addSubview(stepsInDetail)
         
         var loginButtonsView = UIStackView()
         loginButtonsView.addSubview(loginButton)
@@ -62,7 +95,11 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
                                      loginButton.trailingAnchor.constraint(equalTo: loginButtonsView.trailingAnchor, constant: -40)])
         
         
-        var stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,choosingUserName,loginButtonsView])
+        var userNameView = UIStackView(arrangedSubviews: [labelDescriptionUserName, randomUserNameText])
+        userNameView.axis = .horizontal
+        userNameView.distribution = .fillEqually
+        
+        var stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,choosingUserName,userNameView,loginButtonsView])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -99,5 +136,10 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
                 print(result)
             }
         }
+    }
+    
+    private func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
     }
 }
