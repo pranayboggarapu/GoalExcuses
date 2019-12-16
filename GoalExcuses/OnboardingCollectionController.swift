@@ -70,9 +70,8 @@ class OnboardingCollectionController : UICollectionViewController, UICollectionV
     }
     
     @objc private func handleNext() {
-        
-        if pageControl.currentPage == 3 {
-            self.performSegue(withIdentifier: "completedOnboarding", sender: nil)
+        if pageControl.currentPage == 3 {            
+            self.present(FacebookLoginViewController(), animated: true, completion: nil)
         } else {
             let nextIndex = min(pageControl.currentPage + 1, pageData.totalData.count - 1)
             let indexPath = IndexPath(item: nextIndex, section: 0)
@@ -83,7 +82,6 @@ class OnboardingCollectionController : UICollectionViewController, UICollectionV
             } else {
                 nextButton.setAttributedTitle(NSMutableAttributedString(string: "NEXT", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)]), for: .normal)
             }
-            
         }
     }
     

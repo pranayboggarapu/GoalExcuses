@@ -9,10 +9,13 @@
 import UIKit
 import FBSDKLoginKit
 
-class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
+class FacebookLoginViewController: UIViewController {
     
-    let loginButton: FBLoginButton =  {
-        let button = FBLoginButton()
+    let loginButton: UIButton =  {
+        let button = UIButton()
+        button.backgroundColor = UIColor(red: 64/255, green: 128/255, blue: 255/255, alpha: 1.0)
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("My Login", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -26,7 +29,7 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
     
     var goalExcuseTextAndDescription: UITextView = {
         var textView = UITextView()
-        let subtitleText = NSAttributedString(string: "\n\n\nYou're almost there....You're on your way to achieve your goal by cutting down your excuses with the help of friends.", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
+        let subtitleText = NSAttributedString(string: "\n\n\n ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
         let headerText = NSAttributedString(string: "You're almost done!!", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
         let mutableAttributedString = NSMutableAttributedString(attributedString: headerText)
         mutableAttributedString.append(subtitleText)
@@ -71,9 +74,27 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginButton.delegate = self
+        self.view.backgroundColor = .white
         setupUIOnTheScreen()
         randomUserNameText.text = randomString(length: 8)
+        loginButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
+    }
+    
+    @objc func handleCustomFBLogin() {
+        FacebookClient.loginAndFetchUserDetails(viewController: self, completionHandler: validateFBLoginResponse(isSuccess:actualUserData:error:))
+    }
+    
+    func validateFBLoginResponse(isSuccess: Bool, actualUserData: FBUserData?, error: Error?) {
+        if isSuccess {
+            loginSuccessfulGoToNextScreen(actualuserData: actualUserData!)
+        } else {
+            //Have to implement UI showing for failure
+        }
+    }
+    
+    private func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
     private func setupUIOnTheScreen() {
@@ -104,8 +125,6 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        
         view.addSubview(stackView)
         NSLayoutConstraint.activate([stackView.leftAnchor.constraint(equalTo: view.leftAnchor), stackView.rightAnchor.constraint(equalTo: view.rightAnchor), stackView.topAnchor.constraint(equalTo: view.topAnchor), stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         
@@ -122,24 +141,13 @@ class FacebookLoginViewController: UIViewController, LoginButtonDelegate {
         
     }
     
+    func loginSuccessfulGoToNextScreen(actualuserData: FBUserData) {
+        let tabController = TabBarController()
+        tabController.userData = UserData(fbData: actualuserData, userRandomNameGenerated: randomUserNameText.text!)
+        self.present(tabController, animated: true, completion: nil)
+    }
+    
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         print("Successfully logged out")
-    }
-    
-    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
-        if let error = error {
-            print("Error")
-        } else {
-            print("Success")
-            let request = GraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connection, result, err) in
-                if err != nil {return}
-                print(result)
-            }
-        }
-    }
-    
-    private func randomString(length: Int) -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
     }
 }
