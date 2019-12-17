@@ -13,6 +13,8 @@
 		246A2F1723A6F16B006B9BFD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F1623A6F16B006B9BFD /* TabBarController.swift */; };
 		246A2F2123A709D4006B9BFD /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F2023A709D4006B9BFD /* UserData.swift */; };
 		246A2F2323A70A51006B9BFD /* FacebookClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F2223A70A51006B9BFD /* FacebookClient.swift */; };
+		246A2F2E23A893FE006B9BFD /* NavBarExtensionOnMainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F2D23A893FE006B9BFD /* NavBarExtensionOnMainScreen.swift */; };
+		246A2F3023A8982C006B9BFD /* GoalInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F2F23A8982C006B9BFD /* GoalInfoCell.swift */; };
 		24BC92C9239C1D4000422319 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92C8239C1D4000422319 /* AppDelegate.swift */; };
 		24BC92D0239C1D4100422319 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24BC92CF239C1D4100422319 /* Assets.xcassets */; };
 		24BC92D3239C1D4100422319 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24BC92D1239C1D4100422319 /* LaunchScreen.storyboard */; };
@@ -31,6 +33,8 @@
 		246A2F1623A6F16B006B9BFD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		246A2F2023A709D4006B9BFD /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		246A2F2223A70A51006B9BFD /* FacebookClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookClient.swift; sourceTree = "<group>"; };
+		246A2F2D23A893FE006B9BFD /* NavBarExtensionOnMainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarExtensionOnMainScreen.swift; sourceTree = "<group>"; };
+		246A2F2F23A8982C006B9BFD /* GoalInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalInfoCell.swift; sourceTree = "<group>"; };
 		24BC92C5239C1D4000422319 /* GoalExcuses.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoalExcuses.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24BC92C8239C1D4000422319 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24BC92CF239C1D4100422319 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 				246A2F1223A6E8DA006B9BFD /* YourGoalTableViewController.swift */,
 				246A2F1423A6E941006B9BFD /* SharedGoalTableViewController.swift */,
 				246A2F1623A6F16B006B9BFD /* TabBarController.swift */,
+				246A2F2D23A893FE006B9BFD /* NavBarExtensionOnMainScreen.swift */,
+				246A2F2F23A8982C006B9BFD /* GoalInfoCell.swift */,
 			);
 			path = GoalExcuses;
 			sourceTree = "<group>";
@@ -252,8 +258,10 @@
 				24BC92DB239C4F6D00422319 /* OnboardingCollectionController.swift in Sources */,
 				24BC92C9239C1D4000422319 /* AppDelegate.swift in Sources */,
 				246A2F1323A6E8DA006B9BFD /* YourGoalTableViewController.swift in Sources */,
+				246A2F2E23A893FE006B9BFD /* NavBarExtensionOnMainScreen.swift in Sources */,
 				246A2F1723A6F16B006B9BFD /* TabBarController.swift in Sources */,
 				24BC92E1239C84E500422319 /* FacebookLoginViewController.swift in Sources */,
+				246A2F3023A8982C006B9BFD /* GoalInfoCell.swift in Sources */,
 				24BC92DD239C54F900422319 /* OnboardingCollectionViewCell.swift in Sources */,
 				246A2F1123A6E5C6006B9BFD /* GoalSharingClient.swift in Sources */,
 				24BC92DF239C5B2E00422319 /* OnboardingPageData.swift in Sources */,

@@ -13,6 +13,7 @@ class SharedGoalTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addNavBarButtons()
     }
     
 }
