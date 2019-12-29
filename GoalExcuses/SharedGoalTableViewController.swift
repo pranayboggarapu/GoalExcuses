@@ -102,8 +102,8 @@ class SharedGoalTableViewController: UITableViewController {
             }
             return goalsList
             
-        } catch let fetchError {
-            print("Unable to fetch goals: \(fetchError)")
+        } catch _ {
+            displayErrorMessage(errorTitle: "Error!!", errorMessage: "An unforeseen error occurred during fetching the details")
         }
         return []
     }

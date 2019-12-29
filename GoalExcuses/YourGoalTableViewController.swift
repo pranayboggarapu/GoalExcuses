@@ -13,6 +13,7 @@ import CoreData
 class YourGoalTableViewController: UITableViewController {
     
     var goalData: [GoalData]?
+    var goalsFromLocalDB: [CoreData_Goal]?
     var userData: FBUserData?
     var activityView: UIActivityIndicatorView?
     var emptyLabel: UITextView = {
@@ -38,20 +39,23 @@ class YourGoalTableViewController: UITableViewController {
         self.viewDidLoad()
         showActivityIndicator()
         self.goalData = fetchGoals()
-        
-        if self.goalData?.count != 0 {
-            self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
-            self.tableView.reloadData()
-            emptyLabel.isHidden = true
-        } else {
-            emptyLabel.isHidden = false
-        }
+        tableDisplayOrLabelDisplay()
         
         self.tabBarController?.tabBar.isHidden = false
         self.addNavBarButtons()
         
         DispatchQueue.main.async {
             self.hideActivityIndicator()
+        }
+    }
+    
+    func tableDisplayOrLabelDisplay() {
+        if self.goalData?.count != 0 {
+            self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
+            self.tableView.reloadData()
+            emptyLabel.isHidden = true
+        } else {
+            emptyLabel.isHidden = false
         }
     }
     
@@ -93,15 +97,15 @@ class YourGoalTableViewController: UITableViewController {
         let fetchRequest = NSFetchRequest<CoreData_Goal>(entityName: "CoreData_Goal")
         fetchRequest.predicate = condition
         do {
-            let goals = try context.fetch(fetchRequest)
-            goals.forEach { (specificGoal) in
+            goalsFromLocalDB = try context.fetch(fetchRequest)
+            goalsFromLocalDB!.forEach { (specificGoal) in
                 let currentGoal = GoalData(goalName: specificGoal.goalName!, goalDesc: specificGoal.goalDesc!, goalCreatedDate: specificGoal.goalCreatedDate!, goalSharedUsers: (specificGoal.goalSharedUsers!), goalCreatedUserEmail: specificGoal.goalCreatedUserEmail!, goalCreatedUserName: specificGoal.goalCreatedUserName!)
                 goalsList.append(currentGoal)
             }
             return goalsList
             
-        } catch let fetchError {
-            print("Unable to fetch goals: \(fetchError)")
+        } catch _ {
+            displayErrorMessage(errorTitle: "Error!!", errorMessage: "An unforeseen error occurred during fetching the details")
         }
         return []
     }
@@ -128,5 +132,29 @@ extension YourGoalTableViewController {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        showActivityIndicator()
+        if editingStyle == .delete {
+            let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
+            do {
+                context.delete(goalsFromLocalDB![indexPath.row])
+                try context.save()
+            } catch _ {
+                displayErrorMessage(errorTitle: "Error!!", errorMessage: "An unforeseen error occurred during deleting the details")
+            }
+            self.goalData?.remove(at: indexPath.row)
+            self.goalsFromLocalDB?.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableDisplayOrLabelDisplay()
+        }
+        DispatchQueue.main.async {
+            self.hideActivityIndicator()
+        }
     }
 }

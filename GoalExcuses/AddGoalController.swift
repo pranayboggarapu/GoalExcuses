@@ -146,6 +146,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
     @objc func addAGoal() {
         showActivityIndicator()
         validateUserDetailsAndInsertTheData(addDataToLocalDB(_:))
+        hideActivityIndicator()
     }
     
     @objc func cancelButtonPressed() {
@@ -181,8 +182,8 @@ extension AddGoalController {
         //perform the save
         do {
             try context.save()
-        } catch let saveErr {
-            print("Failed to save goal \(saveErr)")
+        } catch _ {
+            displayErrorMessage(errorTitle: "Error!!", errorMessage: "An unforeseen error occurred during saving the goal")
         }
         DispatchQueue.main.async {
             self.activityView?.stopAnimating()
@@ -196,7 +197,7 @@ extension AddGoalController {
         let goalDescTextValue = goalDescText.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\t", with: "")
         let goalSharedEmailTextValue = goalSharedEmailText.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\n", with: "")
         
-        guard !goalNameTextValue.isEmpty && !(goalNameTextValue == Constants.goalNameLabel && goalNameText.textColor == UIColor.lightGray)  && goalDescTextValue != Constants.goalDescriptionLabel && !(goalDescTextValue == Constants.goalDescriptionLabel && goalDescText.textColor == UIColor.lightGray) && !goalDescTextValue.isEmpty else {
+        if goalNameTextValue.isEmpty || (goalNameTextValue == Constants.goalNameLabel && goalNameText.textColor == UIColor.lightGray) || (goalDescTextValue == Constants.goalDescriptionLabel && goalDescText.textColor == UIColor.lightGray) || goalDescTextValue.isEmpty {
             displayErrorMessage(errorTitle: "Missing mandatory values", errorMessage: "Please make sure to enter Goal name, description")
             return
         }
