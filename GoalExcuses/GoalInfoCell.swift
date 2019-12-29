@@ -73,12 +73,12 @@ class GoalInfoCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        var firstLineStackView = UIStackView(arrangedSubviews: [goalName,goalCreatedDate])
+        let firstLineStackView = UIStackView(arrangedSubviews: [goalName,goalCreatedDate])
         firstLineStackView.axis = .horizontal
         firstLineStackView.distribution = .equalSpacing
         firstLineStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        var overallStackView = UIStackView(arrangedSubviews: [firstLineStackView,goalDescription, creatorTextView, sharedWithTextView])
+        let overallStackView = UIStackView(arrangedSubviews: [firstLineStackView,goalDescription, creatorTextView, sharedWithTextView])
         overallStackView.axis = .vertical
         overallStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(overallStackView)

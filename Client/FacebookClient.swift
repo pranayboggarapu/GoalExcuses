@@ -15,18 +15,18 @@ class FacebookClient {
         var userData: FBUserData?
         LoginManager().logIn(permissions: ["email","public_profile"], from: viewController) { (result, err) in
             if err != nil {
-                print("FB Login failed:", err)
+                print("FB Login failed:", err as Any)
                 completionHandler(false,nil,err)
             } else if result!.isCancelled {
                 print("FB Login cancelled")
                 completionHandler(false,nil,err)
             } else {
-                let request = GraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connection, result, err) in
+                let _ = GraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connection, result, err) in
                     if err != nil {
-                        print("FB Data Query failed:", err)
+                        print("FB Data Query failed:", err as Any)
                         completionHandler(false,nil,err)
                     } else {
-                        print(result)
+                        print(result as Any)
                         let formattedResult = result! as! [String: String]
                         userData = FBUserData(emailId: formattedResult["email"]!, name: formattedResult["name"]!, id: formattedResult["id"]!)
                         completionHandler(true,userData,nil)

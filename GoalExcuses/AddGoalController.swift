@@ -12,13 +12,20 @@ import CoreData
 
 class AddGoalController: UIViewController, UITextViewDelegate
 {
+    enum Constants {
+        static var goalNameLabel = "Goal Name"
+        static var goalDescriptionLabel = "\n\n\nGoal Description"
+        static var goalSharedEmailTextLabel = "\n\n\nFriends Email Id seperated by Comma"
+        static var goalNotSharedErrorLabel = "Goal Not shared with users "
+    }
+    
     var userData: FBUserData?
     
     var goalNameText: UITextView = {
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .left
-        textView.text = "Goal Name"
+        textView.text = Constants.goalNameLabel
         
         textView.textColor = UIColor.black
         textView.layer.cornerRadius = 8.0
@@ -35,7 +42,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .left
-        textView.text = "\n\n\nGoal Description"
+        textView.text = Constants.goalDescriptionLabel
         textView.textColor = UIColor.black
         textView.layer.cornerRadius = 8.0
         textView.layer.masksToBounds = true
@@ -50,7 +57,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .left
-        textView.text = "\n\n\nFriends Email Id seperated by Comma"
+        textView.text = Constants.goalSharedEmailTextLabel
         textView.textColor = UIColor.black
         textView.layer.cornerRadius = 8.0
         textView.layer.masksToBounds = true
@@ -72,7 +79,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
     
     var errorMessageLabel: UITextView = {
         var textView = UITextView()
-        let text = NSAttributedString(string: "Goal Not shared with users ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
+        let text = NSAttributedString(string: Constants.goalNotSharedErrorLabel, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
         let mutableAttributedString = NSMutableAttributedString(attributedString: text)
         textView.attributedText = mutableAttributedString
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -166,20 +173,25 @@ extension AddGoalController {
     }
     
     func validateUserDetailsAndInsertTheData(_ completionHandler: @escaping (GoalData) -> Void) {
-        guard !goalNameText.text.isEmpty && !(goalNameText.text == "Goal Name" && goalNameText.textColor == UIColor.lightGray)  && goalDescText.text != "\n\n\nGoal Description" && !(goalDescText.text == "\n\n\nGoal Description" && goalNameText.textColor == UIColor.lightGray) && !goalDescText.text.isEmpty else {
+        
+        let goalNameTextValue = goalNameText.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\t", with: "")
+        let goalDescTextValue = goalDescText.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\t", with: "")
+        let goalSharedEmailTextValue = goalSharedEmailText.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\n", with: "")
+        
+        guard !goalNameTextValue.isEmpty && !(goalNameTextValue == Constants.goalNameLabel && goalNameText.textColor == UIColor.lightGray)  && goalDescTextValue != Constants.goalDescriptionLabel && !(goalDescTextValue == Constants.goalDescriptionLabel && goalDescText.textColor == UIColor.lightGray) && !goalDescTextValue.isEmpty else {
             displayErrorMessage(errorTitle: "Missing mandatory values", errorMessage: "Please make sure to enter Goal name, description")
             return
         }
-        guard !goalSharedEmailText.text.isEmpty && !(goalSharedEmailText.text == "\n\n\nFriends Email Id seperated by Comma") && !(goalSharedEmailText.textColor == UIColor.lightGray) else {
+        guard !goalSharedEmailTextValue.isEmpty && !(goalSharedEmailTextValue == Constants.goalSharedEmailTextLabel) && !(goalSharedEmailText.textColor == UIColor.lightGray) else {
             displayErrorMessage(errorTitle: "Missing mandatory values", errorMessage: "Please make sure to enter friend email Ids")
             goalSharedEmailText.becomeFirstResponder()
             return
         }
-        var emailAddressSplit = goalSharedEmailText.text.split(separator: ",").filter { (inputString) -> Bool in
+        let emailAddressSplit = goalSharedEmailTextValue.split(separator: ",").filter { (inputString) -> Bool in
             return isValidEmail(String(inputString))
         }
         
-        let inviteNotSentUsers = goalSharedEmailText.text.split(separator: ",").filter { firstElement in !emailAddressSplit.contains { secondElement in return String(firstElement) == String(secondElement) } }
+        let inviteNotSentUsers = goalSharedEmailTextValue.split(separator: ",").filter { firstElement in !emailAddressSplit.contains { secondElement in return String(firstElement) == String(secondElement) } }
         
         if !inviteNotSentUsers.isEmpty {
             displayErrorMessage(errorTitle: "Please provide valid Email Ids", errorMessage: "Emails should be in the format of xxx@abc.com")
@@ -190,10 +202,10 @@ extension AddGoalController {
         
         var toBeSavedStrings: [String] = []
         for subseq in emailAddressSplit {
-            toBeSavedStrings.append(String(subseq))
+            toBeSavedStrings.append(String(subseq).trimmingCharacters(in: .whitespacesAndNewlines))
         }
         
-        let goalToBeInserted = GoalData(goalName: goalNameText.text!, goalDesc: goalDescText.text!, goalCreatedDate: returnFormattedDate(), goalSharedUsers: toBeSavedStrings, goalCreatedUserEmail: userData!.emailId, goalCreatedUserName: userData!.name)
+        let goalToBeInserted = GoalData(goalName: goalNameTextValue, goalDesc: goalDescTextValue, goalCreatedDate: returnFormattedDate(), goalSharedUsers: toBeSavedStrings, goalCreatedUserEmail: userData!.emailId, goalCreatedUserName: userData!.name)
         
         completionHandler(goalToBeInserted)
     }
@@ -221,13 +233,13 @@ extension AddGoalController {
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty && textView == goalDescText {
-            textView.text = "\n\n\nGoal Description"
+            textView.text = Constants.goalDescriptionLabel
             textView.textColor = UIColor.lightGray
         } else if textView.text.isEmpty && textView == goalNameText {
-            textView.text = "Goal Name"
+            textView.text = Constants.goalNameLabel
             textView.textColor = UIColor.lightGray
         } else if textView.text.isEmpty && textView == goalSharedEmailText {
-            textView.text = "\n\n\nFriends Email Id seperated by Comma"
+            textView.text = Constants.goalSharedEmailTextLabel
             textView.textColor = UIColor.lightGray
         }
     }

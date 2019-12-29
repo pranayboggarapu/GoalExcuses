@@ -50,13 +50,13 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
     
     private func setupUIOnTheScreen() {
         
-        var imageView = UIView()
+        let imageView = UIView()
         imageView.addSubview(goalExcuseImage)
         
-        var descriptionView = UIView()
+        let descriptionView = UIView()
         descriptionView.addSubview(goalExcuseTextAndDescription)
                 
-        var stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,UIView()])
+        let stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,UIView()])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false

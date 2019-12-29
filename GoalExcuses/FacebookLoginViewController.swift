@@ -50,14 +50,14 @@ class FacebookLoginViewController: UIViewController {
     
     private func setupUIOnTheScreen() {
         
-        var imageView = UIView()
+        let imageView = UIView()
         imageView.addSubview(goalExcuseImage)
         
-        var descriptionView = UIView()
+        let descriptionView = UIView()
         descriptionView.addSubview(goalExcuseTextAndDescription)
         
         
-        var loginButtonsView = UIStackView()
+        let loginButtonsView = UIStackView()
         loginButtonsView.addSubview(loginButton)
         NSLayoutConstraint.activate([loginButton.topAnchor.constraint(equalTo: loginButtonsView.topAnchor, constant: 60),
                                      loginButton.heightAnchor.constraint(equalToConstant: 60),
@@ -67,7 +67,7 @@ class FacebookLoginViewController: UIViewController {
         
         
         
-        var stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,loginButtonsView])
+        let stackView = UIStackView(arrangedSubviews: [imageView,descriptionView,loginButtonsView])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
