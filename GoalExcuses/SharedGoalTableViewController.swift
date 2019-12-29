@@ -16,17 +16,38 @@ class SharedGoalTableViewController: UITableViewController {
     var userData: FBUserData?
     var activityView: UIActivityIndicatorView?
     
+    var emptyLabel: UITextView = {
+        var textView = UITextView()
+        let subtitleText = NSAttributedString(string: "No goals shared with you so far", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray])
+        let mutableAttributedString = NSMutableAttributedString(attributedString: subtitleText)
+        textView.attributedText = mutableAttributedString
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textAlignment = .center
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        return textView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(emptyLabel)
+        emptyLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        emptyLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         showActivityIndicator()
         self.goalData = fetchSharedGoals()
+        if self.goalData?.count != 0 {
+            emptyLabel.isHidden = true
+            tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
+            tableView.reloadData()
+        } else {
+            emptyLabel.isHidden = false
+        }
         self.tabBarController?.tabBar.isHidden = false
         addNavBarButtons()
-        tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
-        tableView.reloadData()
+        
         DispatchQueue.main.async {
             self.hideActivityIndicator()
         }

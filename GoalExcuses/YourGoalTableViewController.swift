@@ -15,19 +15,41 @@ class YourGoalTableViewController: UITableViewController {
     var goalData: [GoalData]?
     var userData: FBUserData?
     var activityView: UIActivityIndicatorView?
+    var emptyLabel: UITextView = {
+        var textView = UITextView()
+        let subtitleText = NSAttributedString(string: "No goals created by you so far", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray])
+        let mutableAttributedString = NSMutableAttributedString(attributedString: subtitleText)
+        textView.attributedText = mutableAttributedString
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textAlignment = .center
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        return textView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(emptyLabel)
+        emptyLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        emptyLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.viewDidLoad()
         showActivityIndicator()
         self.goalData = fetchGoals()
+        
+        if self.goalData?.count != 0 {
+            self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
+            self.tableView.reloadData()
+            emptyLabel.isHidden = true
+        } else {
+            emptyLabel.isHidden = false
+        }
+        
         self.tabBarController?.tabBar.isHidden = false
         self.addNavBarButtons()
-        self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
-        self.tableView.reloadData()
+        
         DispatchQueue.main.async {
             self.hideActivityIndicator()
         }
