@@ -16,4 +16,12 @@ class SharedGoalTableViewController: UITableViewController {
         addNavBarButtons()
     }
     
+    @objc override func logOutButtonPressed() {
+        print("Logout Button Pressed from shared goal")
+    }
+    
+    @objc override func addButtonPressed() {
+        print("Add Button Pressed from shared goal")
+    }
+    
 }

@@ -21,8 +21,3 @@ struct FBUserData: Codable {
     }
 }
 
-
-struct UserData {
-    var fbData: FBUserData
-    var userRandomNameGenerated: String
-}

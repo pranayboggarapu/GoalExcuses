@@ -17,6 +17,9 @@ class FacebookClient {
             if err != nil {
                 print("FB Login failed:", err)
                 completionHandler(false,nil,err)
+            } else if result!.isCancelled {
+                print("FB Login cancelled")
+                completionHandler(false,nil,err)
             } else {
                 let request = GraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connection, result, err) in
                     if err != nil {
@@ -32,5 +35,7 @@ class FacebookClient {
             }
         }
     }
+    
+    
     
 }
