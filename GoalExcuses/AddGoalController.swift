@@ -20,6 +20,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
     }
     
     var userData: FBUserData?
+    var activityView: UIActivityIndicatorView?
     
     var goalNameText: UITextView = {
         var textView = UITextView()
@@ -143,11 +144,25 @@ class AddGoalController: UIViewController, UITextViewDelegate
     }
     
     @objc func addAGoal() {
+        showActivityIndicator()
         validateUserDetailsAndInsertTheData(addDataToLocalDB(_:))
     }
     
     @objc func cancelButtonPressed() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func showActivityIndicator() {
+        activityView = UIActivityIndicatorView(style: .gray)
+        activityView?.center = self.view.center
+        self.view.addSubview(activityView!)
+        activityView?.startAnimating()
+    }
+    
+    func hideActivityIndicator(){
+        if (activityView != nil){
+            activityView?.stopAnimating()
+        }
     }
 }
 
@@ -169,7 +184,10 @@ extension AddGoalController {
         } catch let saveErr {
             print("Failed to save goal \(saveErr)")
         }
-        dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.activityView?.stopAnimating()
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     func validateUserDetailsAndInsertTheData(_ completionHandler: @escaping (GoalData) -> Void) {

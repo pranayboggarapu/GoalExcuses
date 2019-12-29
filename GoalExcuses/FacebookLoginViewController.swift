@@ -41,6 +41,8 @@ class FacebookLoginViewController: UIViewController {
         return textView
     }()
     
+    var activityView: UIActivityIndicatorView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -91,15 +93,21 @@ class FacebookLoginViewController: UIViewController {
 
 extension FacebookLoginViewController {
     @objc func handleCustomFBLogin() {
+        showActivityIndicator()
         FacebookClient.loginAndFetchUserDetails(viewController: self, completionHandler: validateFBLoginResponse(isSuccess:actualUserData:error:))
     }
     
     func validateFBLoginResponse(isSuccess: Bool, actualUserData: FBUserData?, error: Error?) {
         if isSuccess {
-            loginSuccessfulGoToNextScreen(actualuserData: actualUserData!)
+            DispatchQueue.main.async {
+                self.loginSuccessfulGoToNextScreen(actualuserData: actualUserData!)
+            }
         } else {
-            //Have to implement UI showing for failure
+            DispatchQueue.main.async {
+                self.displayErrorMessage(errorTitle: "Error", errorMessage: "Some unforeseen error occurred, while logging into Facebook")
+            }
         }
+        hideActivityIndicator()
     }
     
     func loginSuccessfulGoToNextScreen(actualuserData: FBUserData) {
@@ -111,5 +119,18 @@ extension FacebookLoginViewController {
     
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         print("Successfully logged out")
+    }
+    
+    func showActivityIndicator() {
+        activityView = UIActivityIndicatorView(style: .gray)
+        activityView?.center = self.view.center
+        self.view.addSubview(activityView!)
+        activityView?.startAnimating()
+    }
+    
+    func hideActivityIndicator(){
+        if (activityView != nil){
+            activityView?.stopAnimating()
+        }
     }
 }

@@ -14,22 +14,31 @@ class YourGoalTableViewController: UITableViewController {
     
     var goalData: [GoalData]?
     var userData: FBUserData?
+    var activityView: UIActivityIndicatorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.goalData = fetchGoals()
-        self.tabBarController?.tabBar.isHidden = false
-        addNavBarButtons()
-        tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
-        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.viewDidLoad()
+        showActivityIndicator()
+        self.goalData = fetchGoals()
+        self.tabBarController?.tabBar.isHidden = false
+        self.addNavBarButtons()
+        self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
+        self.tableView.reloadData()
+        DispatchQueue.main.async {
+            self.hideActivityIndicator()
+        }
     }
     
     @objc override func logOutButtonPressed() {
-        print("Logout Button Pressed from your goal")
+        showActivityIndicator()
+        self.userData = nil
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc override func addButtonPressed() {
@@ -40,12 +49,27 @@ class YourGoalTableViewController: UITableViewController {
         present(navController, animated: true, completion: nil)
     }
     
+    func showActivityIndicator() {
+        activityView = UIActivityIndicatorView(style: .gray)
+        activityView?.center = self.view.center
+        self.view.addSubview(activityView!)
+        activityView?.startAnimating()
+    }
+    
+    func hideActivityIndicator(){
+        if (activityView != nil){
+            activityView?.stopAnimating()
+        }
+    }
+    
     private func fetchGoals() -> [GoalData] {
         //Fetching the Goal Data
         let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
         self.goalData?.removeAll()
         var goalsList: [GoalData] = []
+        let condition: NSPredicate = NSPredicate(format: "goalCreatedUserEmail == %@", userData!.emailId)
         let fetchRequest = NSFetchRequest<CoreData_Goal>(entityName: "CoreData_Goal")
+        fetchRequest.predicate = condition
         do {
             let goals = try context.fetch(fetchRequest)
             goals.forEach { (specificGoal) in

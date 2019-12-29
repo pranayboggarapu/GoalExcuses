@@ -27,6 +27,7 @@ class TabBarController: UITabBarController {
         let sharedGoalController = SharedGoalTableViewController(style: .plain)
         sharedGoalController.title = "Goals Shared with me"
         sharedGoalController.tabBarItem = UITabBarItem(title: "Shared Goals", image: nil, tag: 1)
+        sharedGoalController.userData = userData
         
         let controllers = [myGoalController,sharedGoalController]
                 
