@@ -9,5 +9,10 @@
 import Foundation
 
 struct GoalData {
-    var goalsList: [Goal]
+    var goalName: String
+    var goalDesc: String
+    var goalCreatedDate: String
+    var goalSharedUsers: [String]
+    var goalCreatedUserEmail: String
+    var goalCreatedUserName: String
 }

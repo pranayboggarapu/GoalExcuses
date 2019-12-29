@@ -8,9 +8,11 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class AddGoalController: UIViewController, UITextViewDelegate
 {
+    var userData: FBUserData?
     
     var goalNameText: UITextView = {
         var textView = UITextView()
@@ -82,11 +84,24 @@ class AddGoalController: UIViewController, UITextViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupUI()
+        setupButtonsAndTargets()
+        
+        goalDescText.delegate = self
+        goalNameText.delegate = self
+        goalSharedEmailText.delegate = self
+        goalNameText.becomeFirstResponder()
+    }
+    
+    private func setupButtonsAndTargets() {
+        addGoalButton.addTarget(self, action: #selector(addAGoal), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(cancelButtonPressed))
+    }
+    
+    private func setupUI() {
         view.backgroundColor = .white
-        
         self.title = "Add a Goal"
-        
-        
         view.addSubview(goalNameText)
         goalNameText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 25).isActive = true
         goalNameText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -25).isActive = true
@@ -117,25 +132,40 @@ class AddGoalController: UIViewController, UITextViewDelegate
         addGoalButton.topAnchor.constraint(equalTo: errorMessageLabel.bottomAnchor, constant: 50).isActive = true
         addGoalButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        
-        
-        
-        addGoalButton.addTarget(self, action: #selector(addAGoal), for: .touchUpInside)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(cancelButtonPressed))
-
-        goalDescText.delegate = self
-        goalNameText.delegate = self
-        goalSharedEmailText.delegate = self
-        
-        goalNameText.becomeFirstResponder()
-        
         errorMessageLabel.isHidden = true
     }
     
     @objc func addAGoal() {
-        print("Add a Goal clicked")
+        validateUserDetailsAndInsertTheData(addDataToLocalDB(_:))
+    }
     
+    @objc func cancelButtonPressed() {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension AddGoalController {
+    func addDataToLocalDB(_ goalData: GoalData) {
+        let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
+        let goal = NSEntityDescription.insertNewObject(forEntityName: "CoreData_Goal", into: context)
+        
+        goal.setValue(goalData.goalName, forKey: "goalName")
+        goal.setValue(goalData.goalDesc, forKey: "goalDesc")
+        goal.setValue(goalData.goalCreatedDate, forKey: "goalCreatedDate")
+        goal.setValue(goalData.goalSharedUsers, forKey: "goalSharedUsers")
+        goal.setValue(goalData.goalCreatedUserEmail, forKey: "goalCreatedUserEmail")
+        goal.setValue(goalData.goalCreatedUserName, forKey: "goalCreatedUserName")
+        
+        //perform the save
+        do {
+            try context.save()
+        } catch let saveErr {
+            print("Failed to save goal \(saveErr)")
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func validateUserDetailsAndInsertTheData(_ completionHandler: @escaping (GoalData) -> Void) {
         guard !goalNameText.text.isEmpty && !(goalNameText.text == "Goal Name" && goalNameText.textColor == UIColor.lightGray)  && goalDescText.text != "\n\n\nGoal Description" && !(goalDescText.text == "\n\n\nGoal Description" && goalNameText.textColor == UIColor.lightGray) && !goalDescText.text.isEmpty else {
             displayErrorMessage(errorTitle: "Missing mandatory values", errorMessage: "Please make sure to enter Goal name, description")
             return
@@ -145,7 +175,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
             goalSharedEmailText.becomeFirstResponder()
             return
         }
-        let emailAddressSplit = goalSharedEmailText.text.split(separator: ",").filter { (inputString) -> Bool in
+        var emailAddressSplit = goalSharedEmailText.text.split(separator: ",").filter { (inputString) -> Bool in
             return isValidEmail(String(inputString))
         }
         
@@ -155,22 +185,40 @@ class AddGoalController: UIViewController, UITextViewDelegate
             displayErrorMessage(errorTitle: "Please provide valid Email Ids", errorMessage: "Emails should be in the format of xxx@abc.com")
             errorMessageLabel.text = "Goal Not shared with users \(inviteNotSentUsers)"
             errorMessageLabel.isHidden = false
+            return
         }
         
-        print(emailAddressSplit)
+        var toBeSavedStrings: [String] = []
+        for subseq in emailAddressSplit {
+            toBeSavedStrings.append(String(subseq))
+        }
+        
+        let goalToBeInserted = GoalData(goalName: goalNameText.text!, goalDesc: goalDescText.text!, goalCreatedDate: returnFormattedDate(), goalSharedUsers: toBeSavedStrings, goalCreatedUserEmail: userData!.emailId, goalCreatedUserName: userData!.name)
+        
+        completionHandler(goalToBeInserted)
     }
     
-    @objc func cancelButtonPressed() {
-        dismiss(animated: true, completion: nil)
+    func returnFormattedDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        let createdDate = dateFormatter.string(from: Date())
+        return createdDate
     }
     
+    func isValidEmail(_ inputString: String) -> Bool {
+        let regEx = try! NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}", options: .caseInsensitive)
+        return regEx.firstMatch(in: inputString, options: [], range: NSRange(location: 0, length: inputString.count)) != nil
+    }
+}
+
+extension AddGoalController {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor != UIColor.black {
             textView.text = nil
             textView.textColor = UIColor.black
         }
     }
-
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty && textView == goalDescText {
             textView.text = "\n\n\nGoal Description"
@@ -183,10 +231,4 @@ class AddGoalController: UIViewController, UITextViewDelegate
             textView.textColor = UIColor.lightGray
         }
     }
-    
-    func isValidEmail(_ inputString: String) -> Bool {
-        let regEx = try! NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}", options: .caseInsensitive)
-        return regEx.firstMatch(in: inputString, options: [], range: NSRange(location: 0, length: inputString.count)) != nil
-    }
-    
 }

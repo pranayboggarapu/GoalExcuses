@@ -8,6 +8,7 @@
 
 import UIKit
 import FBSDKCoreKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,10 +19,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow()
         window?.makeKeyAndVisible()
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let swipingController = OnboardingCollectionController(collectionViewLayout: layout)
-        window?.rootViewController = swipingController
+        
+        let defaults = UserDefaults.standard
+        
+        guard (!(defaults.object(forKey: "hideOnboarding") == nil) || defaults.bool(forKey: "hideOnboarding")) else {
+            defaults.set(true, forKey: "hideOnboarding")
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            let swipingController = OnboardingCollectionController(collectionViewLayout: layout)
+            window?.rootViewController = swipingController
+            return true
+        }
+        
+        let viewController = FacebookLoginViewController()
+        window?.rootViewController = viewController
         return true
     }
 

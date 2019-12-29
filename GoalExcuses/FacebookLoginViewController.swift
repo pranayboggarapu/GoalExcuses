@@ -48,18 +48,6 @@ class FacebookLoginViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
     }
     
-    @objc func handleCustomFBLogin() {
-        FacebookClient.loginAndFetchUserDetails(viewController: self, completionHandler: validateFBLoginResponse(isSuccess:actualUserData:error:))
-    }
-    
-    func validateFBLoginResponse(isSuccess: Bool, actualUserData: FBUserData?, error: Error?) {
-        if isSuccess {
-            loginSuccessfulGoToNextScreen(actualuserData: actualUserData!)
-        } else {
-            //Have to implement UI showing for failure
-        }
-    }
-    
     private func setupUIOnTheScreen() {
         
         var imageView = UIView()
@@ -99,10 +87,25 @@ class FacebookLoginViewController: UIViewController {
         goalExcuseTextAndDescription.textAlignment = .center
         
     }
+}
+
+extension FacebookLoginViewController {
+    @objc func handleCustomFBLogin() {
+        FacebookClient.loginAndFetchUserDetails(viewController: self, completionHandler: validateFBLoginResponse(isSuccess:actualUserData:error:))
+    }
+    
+    func validateFBLoginResponse(isSuccess: Bool, actualUserData: FBUserData?, error: Error?) {
+        if isSuccess {
+            loginSuccessfulGoToNextScreen(actualuserData: actualUserData!)
+        } else {
+            //Have to implement UI showing for failure
+        }
+    }
     
     func loginSuccessfulGoToNextScreen(actualuserData: FBUserData) {
         let tabController = TabBarController()
         tabController.userData = actualuserData
+        tabController.setupTabControllers()
         self.present(tabController, animated: true, completion: nil)
     }
     

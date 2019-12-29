@@ -12,57 +12,20 @@ import CoreData
 
 class YourGoalTableViewController: UITableViewController {
     
-    var goalData: [Goal]?
+    var goalData: [GoalData]?
+    var userData: FBUserData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.goalData = fetchGoals()
         self.tabBarController?.tabBar.isHidden = false
         addNavBarButtons()
         tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
-        
-//        let company = NSEntityDescription.insertNewObject(forEntityName: "Goal", into: context)
-//
-//        company.setValue("Goal Description \(randomString(length: 4))", forKey: "goalDesc")
-//        company.setValue("Goal Name \(randomString(length: 4))", forKey: "goalName")
-        
-//        //perform the save
-//        do {
-//            try context.save()
-//        } catch let saveErr {
-//            print("Failed to save goal \(saveErr)")
-//        }
-        
-        
-        
+        tableView.reloadData()
     }
     
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
+    override func viewWillAppear(_ animated: Bool) {
         self.viewDidLoad()
-        
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (goalData!.count)
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "goalInfoCell", for: indexPath) as! GoalInfoCell
-//        cell.textLabel?.text = goalData![indexPath.row].goalName
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .none
-        cell.goalCreatedDate.text = dateFormatter.string(from: Date())
-        cell.goalName.text = goalData![indexPath.row].goalName
-        cell.goalDescription.text = "Goal Description Goal DescriptionGoal DescriptionGoal DescriptionGoal DescriptionGoal DescriptionGoal Description"
-        cell.sharedWithTextView.text = "Shared With: fsadkj@gmail.com, safjd@gmail.com, dsaf@gmail.com,dsaf@gmail.com"
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
     }
     
     @objc override func logOutButtonPressed() {
@@ -71,17 +34,53 @@ class YourGoalTableViewController: UITableViewController {
     
     @objc override func addButtonPressed() {
         let addGoalController = AddGoalController()
+        addGoalController.userData = self.userData
         self.tabBarController?.tabBar.isHidden = true
-        
         let navController = UINavigationController(rootViewController: addGoalController)
-        
         present(navController, animated: true, completion: nil)
-        
     }
     
-    private func randomString(length: Int) -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
+    private func fetchGoals() -> [GoalData] {
+        //Fetching the Goal Data
+        let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
+        self.goalData?.removeAll()
+        var goalsList: [GoalData] = []
+        let fetchRequest = NSFetchRequest<CoreData_Goal>(entityName: "CoreData_Goal")
+        do {
+            let goals = try context.fetch(fetchRequest)
+            goals.forEach { (specificGoal) in
+                let currentGoal = GoalData(goalName: specificGoal.goalName!, goalDesc: specificGoal.goalDesc!, goalCreatedDate: specificGoal.goalCreatedDate!, goalSharedUsers: (specificGoal.goalSharedUsers!), goalCreatedUserEmail: specificGoal.goalCreatedUserEmail!, goalCreatedUserName: specificGoal.goalCreatedUserName!)
+                goalsList.append(currentGoal)
+            }
+            return goalsList
+            
+        } catch let fetchError {
+            print("Unable to fetch goals: \(fetchError)")
+        }
+        return []
+    }
+}
+
+extension YourGoalTableViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (goalData!.count)
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "goalInfoCell", for: indexPath) as! GoalInfoCell
+        cell.goalCreatedDate.text = goalData![indexPath.row].goalCreatedDate
+        cell.goalName.text = goalData![indexPath.row].goalName
+        cell.goalDescription.text = goalData![indexPath.row].goalDesc
+        let headerText = NSAttributedString(string: "Shared With: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)])
+        let subtitleText = NSAttributedString(string: "\(goalData![indexPath.row].goalSharedUsers.joined(separator: " , "))", attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 12)])
+        let mutableAttributedString = NSMutableAttributedString(attributedString: headerText)
+        mutableAttributedString.append(subtitleText)
+        cell.sharedWithTextView.attributedText = mutableAttributedString
+        cell.creatorTextView.text = "Created by: \(goalData![indexPath.row].goalCreatedUserName) (You)"
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
 }

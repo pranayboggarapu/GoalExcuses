@@ -10,5 +10,16 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "AppDelegate.application(_:didFinishLaunchingWithOptions:):AppDelegate.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "defaults.bool(forKey: &quot;onboardingDisplayFlag&quot;)">
+            </PersistentString>
+            <PersistentString
+               value = "defaults.object(forKey: &quot;onboardingDisplayFlag&quot;) != nil">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

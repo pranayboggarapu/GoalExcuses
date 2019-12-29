@@ -1,5 +1,5 @@
 //
-//  NavBarExtension.swift
+//  GenericUIViewControllerExtension.swift
 //  GoalExcuses
 //
 //  Created by Sai Venkata Pranay Boggarapu on 12/16/19.

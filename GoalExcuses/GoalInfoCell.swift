@@ -38,17 +38,32 @@ class GoalInfoCell: UITableViewCell {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.textAlignment = .right
+        textView.textColor = UIColor.lightGray
         return textView
     }()
     
     var sharedWithTextView: UITextView = {
         var textView = UITextView()
+        textView.text = "Shared with : "
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .left
         textView.isEditable = false
+        textView.font = UIFont.boldSystemFont(ofSize: 12)
         textView.isScrollEnabled = false
         return textView
     }()
+    
+    var creatorTextView: UITextView = {
+        var textView = UITextView()
+        textView.text = "Creator : "
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textAlignment = .left
+        textView.isEditable = false
+        textView.font = UIFont.boldSystemFont(ofSize: 12)
+        textView.isScrollEnabled = false
+        return textView
+    }()
+    
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,21 +78,7 @@ class GoalInfoCell: UITableViewCell {
         firstLineStackView.distribution = .equalSpacing
         firstLineStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        
-//        let subtitleText = NSAttributedString(string: "\n\n\n\(page.descriptionText)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.gray])
-//        let headerText = NSAttributedString(string: page.headerText, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
-//        let mutableAttributedString = NSMutableAttributedString(attributedString: headerText)
-//        mutableAttributedString.append(subtitleText)
-//        goalExcuseTextAndDescription.attributedText = mutableAttributedString
-        
-//        var stackView = UIStackView(arrangedSubviews: [firstLineStackView,goalDescription])
-//        stackView.axis = .vertical
-//        stackView.distribution = .fillEqually
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//
-        
-        var overallStackView = UIStackView(arrangedSubviews: [firstLineStackView,goalDescription, sharedWithTextView])
+        var overallStackView = UIStackView(arrangedSubviews: [firstLineStackView,goalDescription, creatorTextView, sharedWithTextView])
         overallStackView.axis = .vertical
         overallStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(overallStackView)
@@ -86,14 +87,6 @@ class GoalInfoCell: UITableViewCell {
         
         NSLayoutConstraint.activate([firstLineStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
                                      firstLineStackView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -40)])
-        
-//        NSLayoutConstraint.activate([firstLineStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
-//                                    firstLineStackView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20)])
-        
-//        NSLayoutConstraint.activate([goalDescription.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
-//                                     goalDescription.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20),
-//                                     goalDescription.topAnchor.constraint(equalTo: firstLineStackView.bottomAnchor, constant: 20),
-//                                     goalDescription.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 20)])
     }
     
 }
