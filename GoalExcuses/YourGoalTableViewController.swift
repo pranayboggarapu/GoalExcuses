@@ -30,20 +30,29 @@ class YourGoalTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(emptyLabel)
-        emptyLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        emptyLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.viewDidLoad()
+        self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
+        tableView.separatorStyle = .singleLine
+        tableView.allowsSelection = true
+        tableView.allowsSelectionDuringEditing = false
+        
+        
+        view.addSubview(emptyLabel)
+        emptyLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        emptyLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        
         showActivityIndicator()
         self.goalData = fetchGoals()
         tableDisplayOrLabelDisplay()
         
         self.tabBarController?.tabBar.isHidden = false
         self.addNavBarButtons()
-        
         DispatchQueue.main.async {
             self.hideActivityIndicator()
         }
@@ -51,7 +60,6 @@ class YourGoalTableViewController: UITableViewController {
     
     func tableDisplayOrLabelDisplay() {
         if self.goalData?.count != 0 {
-            self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
             self.tableView.reloadData()
             emptyLabel.isHidden = true
         } else {
@@ -118,6 +126,7 @@ extension YourGoalTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "goalInfoCell", for: indexPath) as! GoalInfoCell
+        
         cell.goalCreatedDate.text = goalData![indexPath.row].goalCreatedDate
         cell.goalName.text = goalData![indexPath.row].goalName
         cell.goalDescription.text = goalData![indexPath.row].goalDesc
@@ -156,5 +165,14 @@ extension YourGoalTableViewController {
         DispatchQueue.main.async {
             self.hideActivityIndicator()
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let addGoalController = AddGoalController()
+        addGoalController.userData = self.userData
+        addGoalController.goalData = goalData![indexPath.row]
+        self.tabBarController?.tabBar.isHidden = true
+        let navController = UINavigationController(rootViewController: addGoalController)
+        present(navController, animated: true, completion: nil)
     }
 }

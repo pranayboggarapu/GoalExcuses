@@ -12,6 +12,8 @@ import CoreData
 
 class AddGoalController: UIViewController, UITextViewDelegate
 {
+    var goalData: GoalData?
+    
     enum Constants {
         static var goalNameLabel = "Goal Name"
         static var goalDescriptionLabel = "\n\n\nGoal Description"
@@ -100,6 +102,12 @@ class AddGoalController: UIViewController, UITextViewDelegate
         goalNameText.delegate = self
         goalSharedEmailText.delegate = self
         goalNameText.becomeFirstResponder()
+        
+        if let goalData = goalData {
+            goalNameText.text = goalData.goalName
+            goalDescText.text = goalData.goalDesc
+            goalSharedEmailText.text = goalData.goalSharedUsers.joined(separator: ",")
+        }
     }
     
     private func setupButtonsAndTargets() {
