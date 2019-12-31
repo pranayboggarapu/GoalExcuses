@@ -16,6 +16,7 @@ class GoalInfoCell: UITableViewCell {
         textView.textAlignment = .left
         textView.isEditable = false
         textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = false
         textView.font = UIFont.italicSystemFont(ofSize: 12)
         textView.textColor = UIColor.lightGray
         return textView
@@ -27,6 +28,7 @@ class GoalInfoCell: UITableViewCell {
         textView.textAlignment = .left
         textView.isEditable = false
         textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = false
         textView.font = UIFont.boldSystemFont(ofSize: 14)
         return textView
     }()
@@ -38,6 +40,7 @@ class GoalInfoCell: UITableViewCell {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.textAlignment = .right
+        textView.isUserInteractionEnabled = false
         textView.textColor = UIColor.lightGray
         return textView
     }()
@@ -48,6 +51,7 @@ class GoalInfoCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .left
         textView.isEditable = false
+        textView.isUserInteractionEnabled = false
         textView.font = UIFont.boldSystemFont(ofSize: 12)
         textView.isScrollEnabled = false
         return textView
@@ -59,6 +63,7 @@ class GoalInfoCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .left
         textView.isEditable = false
+        textView.isUserInteractionEnabled = false
         textView.font = UIFont.boldSystemFont(ofSize: 12)
         textView.isScrollEnabled = false
         return textView

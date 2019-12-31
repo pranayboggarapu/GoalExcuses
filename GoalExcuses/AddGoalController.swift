@@ -13,6 +13,9 @@ import CoreData
 class AddGoalController: UIViewController, UITextViewDelegate
 {
     var goalData: GoalData?
+    var goalsList: [CoreData_Goal]?
+    var isGoalGettingEdited: Bool = false
+    var indexGoalEdited: Int = 0
     
     enum Constants {
         static var goalNameLabel = "Goal Name"
@@ -105,8 +108,13 @@ class AddGoalController: UIViewController, UITextViewDelegate
         
         if let goalData = goalData {
             goalNameText.text = goalData.goalName
+            goalNameText.textColor = UIColor.black
             goalDescText.text = goalData.goalDesc
+            goalDescText.textColor = UIColor.black
             goalSharedEmailText.text = goalData.goalSharedUsers.joined(separator: ",")
+            goalSharedEmailText.textColor = UIColor.black
+            addGoalButton.setTitle("Update the Goal", for: .normal)
+            isGoalGettingEdited = true
         }
     }
     
@@ -153,7 +161,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
     
     @objc func addAGoal() {
         showActivityIndicator()
-        validateUserDetailsAndInsertTheData(addDataToLocalDB(_:))
+        isGoalGettingEdited ? validateUserDetailsAndInsertTheData(updateDataInLocalDB(_:)) : validateUserDetailsAndInsertTheData(addDataToLocalDB(_:))
         hideActivityIndicator()
     }
     
@@ -192,6 +200,29 @@ extension AddGoalController {
             try context.save()
         } catch _ {
             displayErrorMessage(errorTitle: "Error!!", errorMessage: "An unforeseen error occurred during saving the goal")
+        }
+        DispatchQueue.main.async {
+            self.activityView?.stopAnimating()
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func updateDataInLocalDB(_ goalData: GoalData) {
+        let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
+        do {
+            context.delete(goalsList![indexGoalEdited])
+            let goal = NSEntityDescription.insertNewObject(forEntityName: "CoreData_Goal", into: context)
+            
+            goal.setValue(goalData.goalName, forKey: "goalName")
+            goal.setValue(goalData.goalDesc, forKey: "goalDesc")
+            goal.setValue(goalData.goalCreatedDate, forKey: "goalCreatedDate")
+            goal.setValue(goalData.goalSharedUsers, forKey: "goalSharedUsers")
+            goal.setValue(goalData.goalCreatedUserEmail, forKey: "goalCreatedUserEmail")
+            goal.setValue(goalData.goalCreatedUserName, forKey: "goalCreatedUserName")
+            try context.save()
+            
+        } catch _ {
+            displayErrorMessage(errorTitle: "Error!!", errorMessage: "An unforeseen error occurred during updating the details")
         }
         DispatchQueue.main.async {
             self.activityView?.stopAnimating()

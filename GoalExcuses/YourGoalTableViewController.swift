@@ -126,7 +126,7 @@ extension YourGoalTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "goalInfoCell", for: indexPath) as! GoalInfoCell
-        
+        cell.selectionStyle = .gray
         cell.goalCreatedDate.text = goalData![indexPath.row].goalCreatedDate
         cell.goalName.text = goalData![indexPath.row].goalName
         cell.goalDescription.text = goalData![indexPath.row].goalDesc
@@ -168,8 +168,11 @@ extension YourGoalTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
         let addGoalController = AddGoalController()
         addGoalController.userData = self.userData
+        addGoalController.goalsList = goalsFromLocalDB
+        addGoalController.indexGoalEdited = indexPath.row
         addGoalController.goalData = goalData![indexPath.row]
         self.tabBarController?.tabBar.isHidden = true
         let navController = UINavigationController(rootViewController: addGoalController)
