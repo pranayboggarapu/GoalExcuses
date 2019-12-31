@@ -23,3 +23,8 @@ An iPhone app that lets you create goals, share it with friends. User can also s
 
 ## ScreenShots
 
+<img src = "https://github.com/pranayboggarapu/GoalExcuses/blob/master/Screen%20Shot%202019-12-29%20at%205.04.01%20PM.png"/>
+
+<img src = "https://github.com/pranayboggarapu/GoalExcuses/blob/master/Screen%20Shot%202019-12-29%20at%205.04.07%20PM.png"/>
+
+<img src = "https://github.com/pranayboggarapu/GoalExcuses/blob/master/Screen%20Shot%202019-12-29%20at%205.07.31%20PM.png"/>
