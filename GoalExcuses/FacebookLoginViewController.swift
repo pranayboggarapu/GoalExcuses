@@ -11,6 +11,8 @@ import FBSDKLoginKit
 
 class FacebookLoginViewController: UIViewController {
     
+    //MARK:- UI Elements
+    
     let loginButton: UIButton =  {
         let button = UIButton()
         button.backgroundColor = UIColor(red: 64/255, green: 128/255, blue: 255/255, alpha: 1.0)
@@ -43,6 +45,7 @@ class FacebookLoginViewController: UIViewController {
     
     var activityView: UIActivityIndicatorView?
     
+    //MARK:- View Load function
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -50,6 +53,7 @@ class FacebookLoginViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
     }
     
+    //MARK:- UI Setup function
     private func setupUIOnTheScreen() {
         
         let imageView = UIView()
@@ -90,7 +94,7 @@ class FacebookLoginViewController: UIViewController {
         
     }
 }
-
+//MARK:- FB Login functionality
 extension FacebookLoginViewController {
     @objc func handleCustomFBLogin() {
         showActivityIndicator()

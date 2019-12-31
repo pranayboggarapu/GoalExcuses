@@ -10,6 +10,7 @@ import UIKit
 
 class GoalInfoCell: UITableViewCell {
     
+    //MARK:- UI Elements
     var goalDescription: UITextView = {
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +71,7 @@ class GoalInfoCell: UITableViewCell {
     }()
     
     
-    
+    //MARK:- Initialization methods
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

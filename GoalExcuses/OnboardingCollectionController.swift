@@ -10,7 +10,10 @@ import UIKit
 
 class OnboardingCollectionController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    //page data
     var pageData = OnboardingPageData()
+    
+    //MARK:- UI Elements
     
     var prevButton: UIButton = {
         var preButton = UIButton()
@@ -37,6 +40,7 @@ class OnboardingCollectionController : UICollectionViewController, UICollectionV
         return pc
     }()
     
+    //MARK:- view load
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBottomControls()
@@ -47,6 +51,7 @@ class OnboardingCollectionController : UICollectionViewController, UICollectionV
         layout.scrollDirection = .horizontal
     }
     
+    //MARK:- UI Setup
     func setupBottomControls() {
         let bottomStackView = UIStackView(arrangedSubviews: [prevButton,pageControl,nextButton])
         bottomStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,11 +64,9 @@ class OnboardingCollectionController : UICollectionViewController, UICollectionV
                                     bottomStackView.heightAnchor.constraint(equalToConstant: 50)])
     }
     
+    //MARK:- Buttons functionality
     @objc private func handlePrev() {
         let nextIndex = max(pageControl.currentPage - 1, 0)
-        
-        
-        
         let indexPath = IndexPath(item: nextIndex, section: 0)
         pageControl.currentPage = nextIndex
         collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -94,6 +97,10 @@ class OnboardingCollectionController : UICollectionViewController, UICollectionV
             nextButton.setAttributedTitle(NSMutableAttributedString(string: "NEXT", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)]), for: .normal)
         }
     }
+}
+
+//MARK:- Collection View delegate functions
+extension OnboardingCollectionController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pageData.totalData.count

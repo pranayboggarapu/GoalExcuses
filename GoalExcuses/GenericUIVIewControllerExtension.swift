@@ -11,6 +11,7 @@ import UIKit
 
 extension UIViewController {
     
+    //MARK:- Adding Nav buttons
     func addNavBarButtons() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LOGOUT", style: .done, target: self, action: #selector(logOutButtonPressed))
         navigationItem.leftBarButtonItem?.tintColor = UIColor(red: 64/255, green: 128/255, blue: 255/255, alpha: 1.0)

@@ -23,6 +23,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    //MARK:- UI Elements
     var goalExcuseImage: UIImageView = {
         var parkingImage = UIImageView()
         parkingImage.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +39,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         return textView
     }()
     
+    //MARK:- Initialize functions
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
@@ -48,8 +50,8 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK:- Setting up UI
     private func setupUIOnTheScreen() {
-        
         let imageView = UIView()
         imageView.addSubview(goalExcuseImage)
         

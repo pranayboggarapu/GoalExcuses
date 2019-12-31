@@ -12,10 +12,12 @@ import CoreData
 
 class SharedGoalTableViewController: UITableViewController {
     
+    //MARK:- Variables declaration
     var goalData: [GoalData]?
     var userData: FBUserData?
     var activityView: UIActivityIndicatorView?
     
+    //MARK:- UI Elements
     var emptyLabel: UITextView = {
         var textView = UITextView()
         let subtitleText = NSAttributedString(string: "No goals shared with you so far", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray])
@@ -28,6 +30,7 @@ class SharedGoalTableViewController: UITableViewController {
         return textView
     }()
     
+    //MARK:- View load and appear functions
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(emptyLabel)
@@ -53,6 +56,7 @@ class SharedGoalTableViewController: UITableViewController {
         }
     }
     
+    //MARK:- button press functionality
     @objc override func logOutButtonPressed() {
         self.userData = nil
         self.dismiss(animated: true, completion: nil)
@@ -66,6 +70,7 @@ class SharedGoalTableViewController: UITableViewController {
         present(navController, animated: true, completion: nil)
     }
     
+    //MARK:- Activity indicator functionality
     func showActivityIndicator() {
         activityView = UIActivityIndicatorView(style: .gray)
         activityView?.center = self.view.center
@@ -79,6 +84,7 @@ class SharedGoalTableViewController: UITableViewController {
         }
     }
     
+    //MARK:- Fetch goals from DB
     private func fetchSharedGoals() -> [GoalData] {
         //Fetching the Goal Data
         let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
@@ -109,6 +115,7 @@ class SharedGoalTableViewController: UITableViewController {
     }
 }
 
+//MARK:- Table View Delegate functions
 extension SharedGoalTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (goalData!.count)
@@ -119,6 +126,7 @@ extension SharedGoalTableViewController {
         cell.goalCreatedDate.text = goalData![indexPath.row].goalCreatedDate
         cell.goalName.text = goalData![indexPath.row].goalName
         cell.goalDescription.text = goalData![indexPath.row].goalDesc
+        //formatting the text display
         let headerText = NSAttributedString(string: "Shared With: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)])
         let subtitleText = NSAttributedString(string: "\(goalData![indexPath.row].goalSharedUsers.joined(separator: " , "))", attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 12)])
         let mutableAttributedString = NSMutableAttributedString(attributedString: headerText)

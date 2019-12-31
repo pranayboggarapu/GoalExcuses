@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		246A2F1123A6E5C6006B9BFD /* GoalSharingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F1023A6E5C6006B9BFD /* GoalSharingClient.swift */; };
 		246A2F1323A6E8DA006B9BFD /* YourGoalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F1223A6E8DA006B9BFD /* YourGoalTableViewController.swift */; };
 		246A2F1523A6E941006B9BFD /* SharedGoalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F1423A6E941006B9BFD /* SharedGoalTableViewController.swift */; };
 		246A2F1723A6F16B006B9BFD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A2F1623A6F16B006B9BFD /* TabBarController.swift */; };
@@ -31,7 +30,6 @@
 
 /* Begin PBXFileReference section */
 		11EF9970E65122B7F0F0C031 /* Pods-GoalExcuses.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoalExcuses.release.xcconfig"; path = "Target Support Files/Pods-GoalExcuses/Pods-GoalExcuses.release.xcconfig"; sourceTree = "<group>"; };
-		246A2F1023A6E5C6006B9BFD /* GoalSharingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalSharingClient.swift; sourceTree = "<group>"; };
 		246A2F1223A6E8DA006B9BFD /* YourGoalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourGoalTableViewController.swift; sourceTree = "<group>"; };
 		246A2F1423A6E941006B9BFD /* SharedGoalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedGoalTableViewController.swift; sourceTree = "<group>"; };
 		246A2F1623A6F16B006B9BFD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -72,8 +70,8 @@
 		246A2F0F23A6E5B2006B9BFD /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				246A2F1023A6E5C6006B9BFD /* GoalSharingClient.swift */,
 				246A2F2223A70A51006B9BFD /* FacebookClient.swift */,
+				24FDF0DF23B43150008DE00B /* CoreDataManagerSingleTon.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -125,7 +123,6 @@
 				246A2F1623A6F16B006B9BFD /* TabBarController.swift */,
 				246A2F2D23A893FE006B9BFD /* GenericUIVIewControllerExtension.swift */,
 				246A2F2F23A8982C006B9BFD /* GoalInfoCell.swift */,
-				24FDF0DF23B43150008DE00B /* CoreDataManagerSingleTon.swift */,
 				24FDF0E123B44136008DE00B /* AddGoalController.swift */,
 			);
 			path = GoalExcuses;
@@ -279,7 +276,6 @@
 				246A2F3023A8982C006B9BFD /* GoalInfoCell.swift in Sources */,
 				24BC92DD239C54F900422319 /* OnboardingCollectionViewCell.swift in Sources */,
 				24FDF0E023B43150008DE00B /* CoreDataManagerSingleTon.swift in Sources */,
-				246A2F1123A6E5C6006B9BFD /* GoalSharingClient.swift in Sources */,
 				24BC92DF239C5B2E00422319 /* OnboardingPageData.swift in Sources */,
 				246A2F2123A709D4006B9BFD /* UserData.swift in Sources */,
 				246A2F2323A70A51006B9BFD /* FacebookClient.swift in Sources */,

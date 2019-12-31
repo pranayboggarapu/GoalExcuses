@@ -14,10 +14,12 @@ class TabBarController: UITabBarController {
     
     var userData: FBUserData?
     
+    //MARK:- View load
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    //MARK:- Setup tab controllers
     func setupTabControllers() {
         let myGoalController = YourGoalTableViewController(style: .plain)
         myGoalController.title = "My Goals"

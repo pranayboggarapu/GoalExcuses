@@ -12,11 +12,13 @@ import CoreData
 
 class AddGoalController: UIViewController, UITextViewDelegate
 {
+    //MARK:- Data Elements
     var goalData: GoalData?
     var goalsList: [CoreData_Goal]?
     var isGoalGettingEdited: Bool = false
     var indexGoalEdited: Int = 0
     
+    //MARK:- Element constants
     enum Constants {
         static var goalNameLabel = "Goal Name"
         static var goalDescriptionLabel = "\n\n\nGoal Description"
@@ -27,6 +29,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
     var userData: FBUserData?
     var activityView: UIActivityIndicatorView?
     
+    //MARK:- UI Elements
     var goalNameText: UITextView = {
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,9 +98,11 @@ class AddGoalController: UIViewController, UITextViewDelegate
         return textView
     }()
     
+    //MARK:- View load function
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
+        //setting up UI
         setupUI()
         setupButtonsAndTargets()
         
@@ -106,6 +111,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
         goalSharedEmailText.delegate = self
         goalNameText.becomeFirstResponder()
         
+        //setting the text elements based on update functions
         if let goalData = goalData {
             goalNameText.text = goalData.goalName
             goalNameText.textColor = UIColor.black
@@ -118,6 +124,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
         }
     }
     
+    //MARK:- Button presses
     private func setupButtonsAndTargets() {
         addGoalButton.addTarget(self, action: #selector(addAGoal), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(cancelButtonPressed))
@@ -169,6 +176,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
         dismiss(animated: true, completion: nil)
     }
     
+    //MARK:- Show and hide activity indicator
     func showActivityIndicator() {
         activityView = UIActivityIndicatorView(style: .gray)
         activityView?.center = self.view.center
@@ -183,6 +191,7 @@ class AddGoalController: UIViewController, UITextViewDelegate
     }
 }
 
+//MARK:- Adding and update data in DB.
 extension AddGoalController {
     func addDataToLocalDB(_ goalData: GoalData) {
         let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
@@ -210,9 +219,9 @@ extension AddGoalController {
     func updateDataInLocalDB(_ goalData: GoalData) {
         let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
         do {
+            //delete and insert the data
             context.delete(goalsList![indexGoalEdited])
             let goal = NSEntityDescription.insertNewObject(forEntityName: "CoreData_Goal", into: context)
-            
             goal.setValue(goalData.goalName, forKey: "goalName")
             goal.setValue(goalData.goalDesc, forKey: "goalDesc")
             goal.setValue(goalData.goalCreatedDate, forKey: "goalCreatedDate")
@@ -230,8 +239,10 @@ extension AddGoalController {
         }
     }
     
+    //MARK:- UI Validation
     func validateUserDetailsAndInsertTheData(_ completionHandler: @escaping (GoalData) -> Void) {
         
+        //trimming the characters
         let goalNameTextValue = goalNameText.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\t", with: "")
         let goalDescTextValue = goalDescText.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\t", with: "")
         let goalSharedEmailTextValue = goalSharedEmailText.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\n", with: "")
@@ -251,6 +262,7 @@ extension AddGoalController {
         
         let inviteNotSentUsers = goalSharedEmailTextValue.split(separator: ",").filter { firstElement in !emailAddressSplit.contains { secondElement in return String(firstElement) == String(secondElement) } }
         
+        //Displaying the error message
         if !inviteNotSentUsers.isEmpty {
             displayErrorMessage(errorTitle: "Please provide valid Email Ids", errorMessage: "Emails should be in the format of xxx@abc.com")
             errorMessageLabel.text = "Goal Not shared with users \(inviteNotSentUsers)"
@@ -282,6 +294,7 @@ extension AddGoalController {
     }
 }
 
+//MARK:- Text delegate functionality
 extension AddGoalController {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor != UIColor.black {

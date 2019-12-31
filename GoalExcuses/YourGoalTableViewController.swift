@@ -12,10 +12,13 @@ import CoreData
 
 class YourGoalTableViewController: UITableViewController {
     
+    //MARK:- Elements declaration
     var goalData: [GoalData]?
     var goalsFromLocalDB: [CoreData_Goal]?
     var userData: FBUserData?
     var activityView: UIActivityIndicatorView?
+    
+    //MARK:- UI Elements
     var emptyLabel: UITextView = {
         var textView = UITextView()
         let subtitleText = NSAttributedString(string: "No goals created by you so far", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray])
@@ -28,6 +31,7 @@ class YourGoalTableViewController: UITableViewController {
         return textView
     }()
     
+    //MARK:- View load and appear functions.
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -38,14 +42,17 @@ class YourGoalTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         self.viewDidLoad()
         self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
+        
+        //table view style setup
         tableView.separatorStyle = .singleLine
         tableView.allowsSelection = true
         tableView.allowsSelectionDuringEditing = false
         
-        
+        //for empty label
         view.addSubview(emptyLabel)
         emptyLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         emptyLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        
         
         showActivityIndicator()
         self.goalData = fetchGoals()
@@ -59,6 +66,7 @@ class YourGoalTableViewController: UITableViewController {
     }
     
     func tableDisplayOrLabelDisplay() {
+        //if goal count is 0
         if self.goalData?.count != 0 {
             self.tableView.reloadData()
             emptyLabel.isHidden = true
@@ -68,6 +76,7 @@ class YourGoalTableViewController: UITableViewController {
     }
     
     @objc override func logOutButtonPressed() {
+        // if logout button is pressed
         showActivityIndicator()
         self.userData = nil
         DispatchQueue.main.async {
@@ -76,6 +85,7 @@ class YourGoalTableViewController: UITableViewController {
     }
     
     @objc override func addButtonPressed() {
+        // Add button functionality
         let addGoalController = AddGoalController()
         addGoalController.userData = self.userData
         self.tabBarController?.tabBar.isHidden = true
@@ -84,6 +94,7 @@ class YourGoalTableViewController: UITableViewController {
     }
     
     func showActivityIndicator() {
+        //show activity indicator
         activityView = UIActivityIndicatorView(style: .gray)
         activityView?.center = self.view.center
         self.view.addSubview(activityView!)
@@ -91,6 +102,7 @@ class YourGoalTableViewController: UITableViewController {
     }
     
     func hideActivityIndicator(){
+        //hide activity indicator
         if (activityView != nil){
             activityView?.stopAnimating()
         }
@@ -118,8 +130,9 @@ class YourGoalTableViewController: UITableViewController {
         return []
     }
 }
-
+//MARK:- Table view delegate functions
 extension YourGoalTableViewController {
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (goalData!.count)
     }
@@ -147,6 +160,7 @@ extension YourGoalTableViewController {
         return true
     }
     
+    //for editing the row
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         showActivityIndicator()
         if editingStyle == .delete {
@@ -167,6 +181,7 @@ extension YourGoalTableViewController {
         }
     }
     
+    //on selecting a row
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
         let addGoalController = AddGoalController()
