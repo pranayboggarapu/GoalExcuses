@@ -6,6 +6,11 @@ An iPhone app that lets you create goals, share it with friends. User can also s
 
  * Device running macOS(MacBook or iMac) 
  * [Xcode](https://developer.apple.com/xcode/)
+ 
+## Versions
+
+ * Xcode version 10.3
+ * Swift Version 5
 
 ## How to Run
 * [Clone](https://github.com/pranayboggarapu/GoalExcuses) or [Download](https://github.com/pranayboggarapu/GoalExcuses/archive/master.zip) this repository.
