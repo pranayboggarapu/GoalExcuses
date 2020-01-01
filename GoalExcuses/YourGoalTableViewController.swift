@@ -56,7 +56,7 @@ class YourGoalTableViewController: CustomGoalController {
 extension YourGoalTableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (goalData!.count)
+        return goalData!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -111,7 +111,6 @@ extension YourGoalTableViewController {
         addGoalController.goalsList = goalsFromLocalDB
         addGoalController.indexGoalEdited = indexPath.row
         addGoalController.goalData = goalData![indexPath.row]
-        self.tabBarController?.tabBar.isHidden = true
         let navController = UINavigationController(rootViewController: addGoalController)
         present(navController, animated: true, completion: nil)
     }

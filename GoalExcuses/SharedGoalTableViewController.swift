@@ -56,7 +56,7 @@ class SharedGoalTableViewController: CustomGoalController {
 //MARK:- Table View Delegate functions
 extension SharedGoalTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (goalData!.count)
+        return goalData!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

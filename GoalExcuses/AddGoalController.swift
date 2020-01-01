@@ -35,8 +35,6 @@ class AddGoalController: UIViewController, UITextViewDelegate
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .left
         textView.text = Constants.goalNameLabel
-        
-        textView.textColor = UIColor.black
         textView.layer.cornerRadius = 8.0
         textView.layer.masksToBounds = true
         textView.layer.borderColor = UIColor.lightGray.cgColor
@@ -52,7 +50,6 @@ class AddGoalController: UIViewController, UITextViewDelegate
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .left
         textView.text = Constants.goalDescriptionLabel
-        textView.textColor = UIColor.black
         textView.layer.cornerRadius = 8.0
         textView.layer.masksToBounds = true
         textView.layer.borderColor = UIColor.lightGray.cgColor
