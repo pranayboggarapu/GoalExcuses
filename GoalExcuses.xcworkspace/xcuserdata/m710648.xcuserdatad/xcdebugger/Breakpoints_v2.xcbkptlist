@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "235"
             endingLineNumber = "235"
-            landmarkName = "validateUserDetailsAndInsertTheData(_:)"
+            landmarkName = "updateDataInLocalDB(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GoalExcuses/SharedGoalTableViewController.swift"
-            timestampString = "599359401.178571"
+            timestampString = "599547855.3224339"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -63,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "239"
             endingLineNumber = "239"
-            landmarkName = "validateUserDetailsAndInsertTheData(_:)"
+            landmarkName = "updateDataInLocalDB(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GoalExcuses/YourGoalTableViewController.swift"
-            timestampString = "599458416.803785"
+            timestampString = "599547855.3228149"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "tableView(_:commit:forRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -111,7 +111,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "211"
             endingLineNumber = "211"
-            landmarkName = "updateDataInLocalDB(_:)"
+            landmarkName = "addDataToLocalDB(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -10,103 +10,25 @@ import Foundation
 import UIKit
 import CoreData
 
-class YourGoalTableViewController: UITableViewController {
+class YourGoalTableViewController: CustomGoalController {
     
     //MARK:- Elements declaration
-    var goalData: [GoalData]?
     var goalsFromLocalDB: [CoreData_Goal]?
-    var userData: FBUserData?
-    var activityView: UIActivityIndicatorView?
     
-    //MARK:- UI Elements
-    var emptyLabel: UITextView = {
-        var textView = UITextView()
-        let subtitleText = NSAttributedString(string: "No goals created by you so far", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray])
-        let mutableAttributedString = NSMutableAttributedString(attributedString: subtitleText)
-        textView.attributedText = mutableAttributedString
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .center
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
     
     //MARK:- View load and appear functions.
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewDidLoad()
-        self.tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
-        
+        preViewAppear()
+        self.goalData = fetchGoals()
+        tableView.reloadData()
         //table view style setup
         tableView.separatorStyle = .singleLine
         tableView.allowsSelection = true
         tableView.allowsSelectionDuringEditing = false
-        
-        //for empty label
-        view.addSubview(emptyLabel)
-        emptyLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        emptyLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        
-        
-        showActivityIndicator()
-        self.goalData = fetchGoals()
-        tableDisplayOrLabelDisplay()
-        
-        self.tabBarController?.tabBar.isHidden = false
-        self.addNavBarButtons()
-        DispatchQueue.main.async {
-            self.hideActivityIndicator()
-        }
+        hideActivityIndicator()
     }
     
-    func tableDisplayOrLabelDisplay() {
-        //if goal count is 0
-        if self.goalData?.count != 0 {
-            self.tableView.reloadData()
-            emptyLabel.isHidden = true
-        } else {
-            emptyLabel.isHidden = false
-        }
-    }
-    
-    @objc override func logOutButtonPressed() {
-        // if logout button is pressed
-        showActivityIndicator()
-        self.userData = nil
-        DispatchQueue.main.async {
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    @objc override func addButtonPressed() {
-        // Add button functionality
-        let addGoalController = AddGoalController()
-        addGoalController.userData = self.userData
-        self.tabBarController?.tabBar.isHidden = true
-        let navController = UINavigationController(rootViewController: addGoalController)
-        present(navController, animated: true, completion: nil)
-    }
-    
-    func showActivityIndicator() {
-        //show activity indicator
-        activityView = UIActivityIndicatorView(style: .gray)
-        activityView?.center = self.view.center
-        self.view.addSubview(activityView!)
-        activityView?.startAnimating()
-    }
-    
-    func hideActivityIndicator(){
-        //hide activity indicator
-        if (activityView != nil){
-            activityView?.stopAnimating()
-        }
-    }
     
     private func fetchGoals() -> [GoalData] {
         //Fetching the Goal Data
@@ -183,7 +105,7 @@ extension YourGoalTableViewController {
     
     //on selecting a row
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let context = CoreDataManagerSingleton.shared.persistentContainer.viewContext
+        let _ = CoreDataManagerSingleton.shared.persistentContainer.viewContext
         let addGoalController = AddGoalController()
         addGoalController.userData = self.userData
         addGoalController.goalsList = goalsFromLocalDB

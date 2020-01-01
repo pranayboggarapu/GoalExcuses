@@ -21,6 +21,7 @@
 		24BC92DD239C54F900422319 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92DC239C54F900422319 /* OnboardingCollectionViewCell.swift */; };
 		24BC92DF239C5B2E00422319 /* OnboardingPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92DE239C5B2E00422319 /* OnboardingPageData.swift */; };
 		24BC92E1239C84E500422319 /* FacebookLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BC92E0239C84E500422319 /* FacebookLoginViewController.swift */; };
+		24FAA69F23BBCAC300E500AB /* CustomGoalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FAA69E23BBCAC300E500AB /* CustomGoalController.swift */; };
 		24FDF0DC23B3F2A0008DE00B /* GoalSharing.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24FDF0DA23B3F2A0008DE00B /* GoalSharing.xcdatamodeld */; };
 		24FDF0DE23B3FE4D008DE00B /* GoalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FDF0DD23B3FE4D008DE00B /* GoalData.swift */; };
 		24FDF0E023B43150008DE00B /* CoreDataManagerSingleTon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FDF0DF23B43150008DE00B /* CoreDataManagerSingleTon.swift */; };
@@ -47,6 +48,7 @@
 		24BC92DE239C5B2E00422319 /* OnboardingPageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageData.swift; sourceTree = "<group>"; };
 		24BC92E0239C84E500422319 /* FacebookLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginViewController.swift; sourceTree = "<group>"; };
 		24BC92E5239C937800422319 /* GoalExcuses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoalExcuses.entitlements; sourceTree = "<group>"; };
+		24FAA69E23BBCAC300E500AB /* CustomGoalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGoalController.swift; sourceTree = "<group>"; };
 		24FDF0DB23B3F2A0008DE00B /* GoalSharing.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GoalSharing.xcdatamodel; sourceTree = "<group>"; };
 		24FDF0DD23B3FE4D008DE00B /* GoalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalData.swift; sourceTree = "<group>"; };
 		24FDF0DF23B43150008DE00B /* CoreDataManagerSingleTon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerSingleTon.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				246A2F2D23A893FE006B9BFD /* GenericUIVIewControllerExtension.swift */,
 				246A2F2F23A8982C006B9BFD /* GoalInfoCell.swift */,
 				24FDF0E123B44136008DE00B /* AddGoalController.swift */,
+				24FAA69E23BBCAC300E500AB /* CustomGoalController.swift */,
 			);
 			path = GoalExcuses;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				246A2F1323A6E8DA006B9BFD /* YourGoalTableViewController.swift in Sources */,
 				24FDF0E223B44136008DE00B /* AddGoalController.swift in Sources */,
 				246A2F2E23A893FE006B9BFD /* GenericUIVIewControllerExtension.swift in Sources */,
+				24FAA69F23BBCAC300E500AB /* CustomGoalController.swift in Sources */,
 				246A2F1723A6F16B006B9BFD /* TabBarController.swift in Sources */,
 				24BC92E1239C84E500422319 /* FacebookLoginViewController.swift in Sources */,
 				246A2F3023A8982C006B9BFD /* GoalInfoCell.swift in Sources */,

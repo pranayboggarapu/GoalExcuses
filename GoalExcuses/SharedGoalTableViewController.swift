@@ -10,78 +10,16 @@ import Foundation
 import UIKit
 import CoreData
 
-class SharedGoalTableViewController: UITableViewController {
-    
-    //MARK:- Variables declaration
-    var goalData: [GoalData]?
-    var userData: FBUserData?
-    var activityView: UIActivityIndicatorView?
-    
-    //MARK:- UI Elements
-    var emptyLabel: UITextView = {
-        var textView = UITextView()
-        let subtitleText = NSAttributedString(string: "No goals shared with you so far", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.gray])
-        let mutableAttributedString = NSMutableAttributedString(attributedString: subtitleText)
-        textView.attributedText = mutableAttributedString
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .center
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        return textView
-    }()
+class SharedGoalTableViewController: CustomGoalController {
     
     //MARK:- View load and appear functions
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.addSubview(emptyLabel)
-        emptyLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        emptyLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
-        showActivityIndicator()
+        super.viewWillAppear(animated)
         self.goalData = fetchSharedGoals()
-        if self.goalData?.count != 0 {
-            emptyLabel.isHidden = true
-            tableView.register(GoalInfoCell.self, forCellReuseIdentifier: "goalInfoCell")
-            tableView.reloadData()
-        } else {
-            emptyLabel.isHidden = false
-        }
-        self.tabBarController?.tabBar.isHidden = false
-        addNavBarButtons()
-        
-        DispatchQueue.main.async {
-            self.hideActivityIndicator()
-        }
-    }
-    
-    //MARK:- button press functionality
-    @objc override func logOutButtonPressed() {
-        self.userData = nil
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc override func addButtonPressed() {
-        let addGoalController = AddGoalController()
-        addGoalController.userData = self.userData
-        self.tabBarController?.tabBar.isHidden = true
-        let navController = UINavigationController(rootViewController: addGoalController)
-        present(navController, animated: true, completion: nil)
-    }
-    
-    //MARK:- Activity indicator functionality
-    func showActivityIndicator() {
-        activityView = UIActivityIndicatorView(style: .gray)
-        activityView?.center = self.view.center
-        self.view.addSubview(activityView!)
-        activityView?.startAnimating()
-    }
-    
-    func hideActivityIndicator(){
-        if (activityView != nil){
-            activityView?.stopAnimating()
-        }
+        tableView.reloadData()
+        preViewAppear()
+        hideActivityIndicator()
+        emptyLabel.text = "No goals shared with you so far"
     }
     
     //MARK:- Fetch goals from DB
